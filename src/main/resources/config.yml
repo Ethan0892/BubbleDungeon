@@ -1,0 +1,468 @@
+# =============================================================
+#  BubbleDungeons - Main Configuration (Organized)
+#  All original options preserved, grouped, and documented.
+#  IMPORTANT: If you rename keys, also update the plugin code.
+# =============================================================
+
+# -------------------------------------------------------------
+# WORLD & GENERATION
+# -------------------------------------------------------------
+world-creation:
+  auto-create-worlds: true          # Auto-create missing dungeon worlds
+  prefer-multiverse: true           # Use Multiverse-Core when present
+  world-type: FLAT                  # NORMAL / FLAT / AMPLIFIED / etc.
+  disable-natural-spawning: true    # Prevent passive/hostile natural spawns
+  set-time-noon: true               # Force time to noon
+  disable-weather: true             # Always clear weather
+  disable-pvp: true                 # Disable PvP inside dungeon worlds
+
+safe-spawning:                      # Prevent spawns over void & fall damage start
+  enabled: false
+  search-radius: 16
+  create-platforms: true
+  platform-material: STONE
+
+# -------------------------------------------------------------
+# GLOBAL FEATURE TOGGLES (core flags used in code)
+# -------------------------------------------------------------
+features:
+  boss-bar: true                    # Progress / auxiliary boss bar
+  actionbar-progress: true          # Show progress in action bar
+  scale-with-players: true          # Legacy scaling flag (see player-scaling)
+  show-timer: true
+  placeholderapi: true
+  economy-rewards: true
+  loot-rewards: true
+  advancement-system: true
+  advancement-notifications: true
+  advancement-sounds: true
+  advancement-multiplayer: true
+  block-protection: true
+  aggressive-mobs: true
+  wave-system: true
+  dungeon-queue: true
+  boss-coins: true
+
+# -------------------------------------------------------------
+# BOSS HEALTH DISPLAY (Main boss & action bar)
+# -------------------------------------------------------------
+boss-health-display:
+  enabled: true
+  use-boss-bar: true
+  style: wither                    # wither (solid) or segmented e.g. SEGMENTED_20
+  color: AUTO                      # AUTO adapts to boss type
+  show-action-bar: true            # Supplementary HP bar
+  update-interval: 20              # 20 ticks = 1 second
+  health-percentage-milestones: [75, 50, 25, 10]
+  milestone-sounds: true
+
+# -------------------------------------------------------------
+# BLOCK PROTECTION (global + detailed)
+# -------------------------------------------------------------
+block-protection:
+  enabled: true
+  admin-override: true             # bubbledungeons.admin bypasses
+  prevent-explosions: true
+  prevent-block-changes: true
+  prevent-projectile-damage: true
+  allow-player-building: false
+
+# -------------------------------------------------------------
+# PLAYER SCALING (adds mobs & difficulty by party size)
+# -------------------------------------------------------------
+player-scaling:
+  enabled: true
+  base-player-count: 1
+  scaling-interval: 1
+  additional-mobs-min: 4
+  additional-mobs-max: 7
+  difficulty-multiplier: 1.25
+  max-scaling-intervals: 6
+  scaling-message: "§c⚔ §e{additional_mobs} additional mobs spawned due to {player_count} players! §c⚔"
+  debug-mode: true
+
+# -------------------------------------------------------------
+# WAVE SYSTEM (splits mobs & injects extra minions)
+# -------------------------------------------------------------
+waves:
+  count: 3
+  delay-seconds: 5
+  # delays-seconds: [0, 5, 8]        # Optional per-wave custom delays
+  extra-minions-per-wave: [2, 3, 5]
+  next-wave-message: "§e§lWave {wave}/{total} starting in {delay}s!"
+  final-wave-message: "§6§l⚔ FINAL WAVE! Prepare for the ultimate challenge!"
+  wave-start-sound: "entity.wither.spawn"
+
+# -------------------------------------------------------------
+# DUNGEON QUEUE / ROTATION
+# Code now enforces an hour cooldown (internal) after completion.
+# wait-time kept for legacy compatibility & messaging variables.
+# -------------------------------------------------------------
+dungeon-queue:
+  enabled: true
+  wait-time: 1200                 # Legacy seconds (overridden to 1h internally if modified)
+  cleanup-radius: 50
+  announcement-interval: 60
+  auto-start: true
+  return-world: sspawn            # Used by code: dungeon-queue.return-world
+  dungeon-order:
+    - sample
+    - crypt
+    - volcano
+    - forest
+    - ultimate
+    - hardcore
+  queue-announcement: "§6§l🏰 DUNGEON QUEUE §6§l🏰 §e{dungeon} is now OPEN! Use §a/dungeon join §eto participate!"
+  completion-announcement: "§a§l✓ DUNGEON COMPLETED! §7Next dungeon opens in §e{wait_time} seconds..."
+  cleanup-announcement: "§c§l🧹 Clearing dungeon area... §7Preparing for next challenge!"
+
+queue-return:                     # Original separate return world section (still honored)
+  world: sspawn
+
+boss-coins:
+  command: "/coins give %player% 1"
+
+# -------------------------------------------------------------
+# MOB SPAWNING & BASIC POSITIONING
+# -------------------------------------------------------------
+spawn-radius: 6              # Random horizontal scatter for base mobs
+minion-spawn-radius: 3       # Ring radius around boss center
+minion-facing: EAST          # Facing direction for minions on spawn
+main-world: world            # Fallback / legacy teleport world
+
+# -------------------------------------------------------------
+# AGGRESSIVE MOB ENHANCEMENTS
+# -------------------------------------------------------------
+aggressive-mobs:
+  enabled: true
+  follow-range: 128
+  targeting-interval: 40
+  dragon-behavior:
+    prevent-flying-away: true
+    max-distance: 50
+    aggressive-phases: true
+    targeting-interval: 20
+
+# Enhanced coordinated AI (roles, formations, abilities)
+enhanced-ai:
+  enabled: true
+  role-assignment: true
+  formation-attacks: true
+  tactical-abilities: true
+  cooldown-management: true
+  batch-processing: true
+
+# Dynamic difficulty (beyond simple scaling)
+dynamic-difficulty:
+  enabled: true
+  scale-with-players: true
+  scale-with-skill: true
+  min-multiplier: 0.5
+  max-multiplier: 2.0
+  adjustment-interval: 10000
+
+# Environmental & atmospheric modifiers
+environmental:
+  enabled: true
+  hazards:
+    enabled: true
+    fire-patches: true
+    hazard-duration: 10000
+    damage-per-tick: 2.0
+  lighting:
+    dynamic: false
+    torch-manipulation: false
+
+# Dragon-specific enhanced phases
+dragon-enhancements:
+  enabled: true
+  phase-transitions: true
+  minion-summoning: true
+  environmental-attacks: true
+  minion-cooldown: 30000
+  desperation-threshold: 0.25
+
+# Visual layer
+visual-enhancements:
+  enabled: true
+  particles:
+    enabled: true
+    mob-abilities: true
+    phase-transitions: true
+    environmental-hazards: true
+  boss-health-bars: true
+  combat-indicators: true
+
+audio-enhancements:
+  enabled: true
+  phase-announcements: true
+  ability-sounds: true
+  environmental-sounds: true
+  combat-music: false
+
+# Player performance & tracking
+progression:
+  enabled: true
+  track-performance: true
+  skill-calculation: true
+  session-tracking: true
+  performance-based-rewards: true
+
+# Resource management
+resource-management:
+  enabled: true
+  limited-supplies: false
+  equipment-durability: true
+  consumable-tracking: true
+
+# Party / grouping
+party:
+  enabled: true
+  max-size: 5
+  private-default: false
+
+# Atmospheric world flavor
+atmospheric-effects:
+  enabled: true
+  weather-control: true
+  announce-changes: true
+  dynamic-time: true
+
+# Performance safeguards
+performance:
+  enabled: true
+  target-tps: 18.0
+  critical-tps: 15.0
+  hibernation:
+    enabled: true
+    inactive-threshold: 300000    # 5 minutes (ms)
+    reduced-update-interval: 200  # ticks
+  mob-limits:
+    max-per-dungeon: 50
+    batch-processing: 5
+    dynamic-follow-range: true
+
+# -------------------------------------------------------------
+# DUNGEON DEFINITIONS (Copy & modify to add more)
+# -------------------------------------------------------------
+dungeons:
+  sample:
+    world: dungeon_world
+    display-name: '&5&lAbyssal Catacombs'
+    location: { x: 0, y: 64, z: 0 }
+    player-spawn: { x: 28, y: 48, z: 8, facing: WEST }
+    boss-spawn:   { x: 8, y: 49, z: 8, facing: EAST }
+    difficulty: EASY
+    rewards:
+      money: 50.0
+      commands: []
+    mobs:
+      - { type: ZOMBIE,   name: '&aApprentice Zombie',  health: 20, damage: 4, speed: 0.25 }
+      - { type: SKELETON, name: '&bSkeleton Archer',    health: 18, damage: 5, speed: 0.28 }
+    boss:
+      enabled: true
+      type: PHANTOM
+      name: '&c&lShadow Lord'
+      health: 150
+      damage: 28
+      speed: 0.4
+      size: 4
+    advancement:
+      title: '&6Sample Dungeon Conqueror'
+      description: '&7You have defeated the Shadow Lord!'
+    loot:
+      enabled: true
+      rolls: 2
+      table:
+        - { item: DIAMOND,    min: 1, max: 3,  weight: 5 }
+        - { item: GOLD_INGOT, min: 4, max: 12, weight: 20 }
+        - { command: 'give %player% minecraft:emerald 5', weight: 10 }
+
+  crypt:
+    world: dungeon_world
+    location: { x: 200, y: 64, z: 0 }
+    player-spawn: { x: 28, y: 48, z: 8, facing: WEST }
+    boss-spawn:   { x: 8, y: 49, z: 8, facing: EAST }
+    difficulty: NORMAL
+    rewards:
+      money: 100.0
+      commands: []
+    mobs:
+      - { type: SKELETON, name: '&7Ancient Guardian', health: 25, damage: 6, speed: 0.3 }
+      - { type: ZOMBIE,   name: '&2Tomb Raider',      health: 30, damage: 8, speed: 0.25 }
+      - { type: SPIDER,   name: '&8Crypt Crawler',    health: 22, damage: 5, speed: 0.35 }
+    boss:
+      enabled: true
+      type: WITHER_SKELETON
+      name: '&4&lBone King'
+      health: 80
+      damage: 15
+      speed: 0.35
+      size: 0
+    advancement:
+      title: '&4Crypt Conqueror'
+      description: '&7You have defeated the Bone King and claimed the crypt!'
+    loot:
+      enabled: true
+      rolls: 3
+      table:
+        - { item: DIAMOND_SWORD, min: 1, max: 1, weight: 3 }
+        - { item: EMERALD,       min: 3, max: 8, weight: 15 }
+        - { command: 'give %player% minecraft:experience_bottle 5', weight: 12 }
+
+  volcano:
+    world: dungeon_world
+    location: { x: 0, y: 64, z: 200 }
+    player-spawn: { x: 28, y: 48, z: 8, facing: WEST }
+    boss-spawn:   { x: 8, y: 49, z: 8, facing: EAST }
+    difficulty: HARD
+    rewards:
+      money: 200.0
+      commands: [ 'give %player% minecraft:fire_resistance 1 600' ]
+    mobs:
+      - { type: BLAZE,      name: '&6Flame Spirit',    health: 35, damage: 10, speed: 0.4 }
+      - { type: MAGMA_CUBE, name: '&cLava Blob',       health: 40, damage: 12, speed: 0.3, size: 2 }
+      - { type: GHAST,      name: '&fVolcanic Terror', health: 50, damage: 15, speed: 0.25 }
+    boss:
+      enabled: true
+      type: ZOMBIE
+      name: '&4&l🔥 Volcanic Titan &4&l🔥'
+      health: 200
+      damage: 30
+      speed: 0.3
+      size: 5
+    advancement:
+      title: '&4&lDragon Slayer'
+      description: '&7You have conquered the mighty Volcanic Titan!'
+    loot:
+      enabled: true
+      rolls: 4
+      table:
+        - { item: NETHERITE_INGOT,        min: 1, max: 2, weight: 2 }
+        - { item: DIAMOND_BLOCK,          min: 2, max: 5, weight: 8 }
+        - { item: ENCHANTED_GOLDEN_APPLE, min: 1, max: 1, weight: 5 }
+        - { command: 'give %player% minecraft:dragon_head 1', weight: 3 }
+
+  forest:
+    world: dungeon_world
+    location: { x: 200, y: 64, z: 200 }
+    player-spawn: { x: 28, y: 48, z: 8, facing: WEST }
+    boss-spawn:   { x: 8, y: 49, z: 8, facing: EAST }
+    difficulty: NORMAL
+    rewards:
+      money: 125.0
+      commands: [ 'give %player% minecraft:golden_apple 2' ]
+    mobs:
+      - { type: SPIDER,  name: '&2Forest Stalker',   health: 28, damage: 7, speed: 0.32 }
+      - { type: CREEPER, name: '&aVenomous Creeper', health: 32, damage: 9, speed: 0.28 }
+      - { type: WITCH,   name: '&5Swamp Witch',      health: 35, damage: 8, speed: 0.3 }
+      - { type: WOLF,    name: '&7Feral Wolf',       health: 30, damage: 6, speed: 0.4 }
+    boss:
+      enabled: true
+      type: RAVAGER
+      name: '&2&l🌿 Ancient Guardian &2&l🌿'
+      health: 120
+      damage: 20
+      speed: 0.25
+      size: 0
+    advancement:
+      title: '&2&lForest Protector'
+      description: '&7You have defeated the Ancient Guardian of the forest!'
+    loot:
+      enabled: true
+      rolls: 3
+      table:
+        - { item: EMERALD_BLOCK,  min: 1, max: 3, weight: 8 }
+        - { item: ENCHANTED_BOOK, min: 1, max: 1, weight: 12 }
+        - { item: GOLDEN_APPLE,   min: 2, max: 4, weight: 15 }
+        - { command: 'give %player% minecraft:totem_of_undying 1', weight: 4 }
+
+  ultimate:
+    world: dungeon_world
+    location: { x: 400, y: 64, z: 400 }
+    player-spawn: { x: 28, y: 48, z: 8, facing: WEST }
+    boss-spawn:   { x: 8, y: 49, z: 8, facing: EAST }
+    difficulty: INSANE
+    rewards:
+      money: 500.0
+      commands: [ 'give %player% minecraft:netherite_ingot 3', 'give %player% minecraft:enchanted_golden_apple 5' ]
+    mobs:
+      - { type: WITHER_SKELETON, name: '&4Death Knight',         health: 80, damage: 20, speed: 0.35 }
+      - { type: BLAZE,           name: '&6Infernal Guardian',    health: 70, damage: 18, speed: 0.4 }
+      - { type: PHANTOM,         name: '&5Void Wraith',          health: 60, damage: 16, speed: 0.45, size: 3 }
+      - { type: RAVAGER,         name: '&8Beast of Destruction', health: 90, damage: 22, speed: 0.3 }
+      - { type: VINDICATOR,      name: '&cElite Assassin',       health: 65, damage: 19, speed: 0.4 }
+      - { type: EVOKER,          name: '&dArcane Master',        health: 55, damage: 17, speed: 0.35 }
+    bosses:                       # Optional multi-phase list
+      - { type: PHANTOM,        name: '&5&l👻 Shadow Lord 👻',   health: 300, damage: 35, speed: 0.4, size: 4 }
+      - { type: BLAZE,          name: '&6&l🔥 Inferno King 🔥',  health: 350, damage: 40, speed: 0.35 }
+      - { type: WITHER_SKELETON,name: '&4&l💀 Death Titan 💀',   health: 400, damage: 45, speed: 0.3 }
+      - { type: WITHER,         name: '&0&l🌟 ULTIMATE DESTROYER 🌟', health: 500, damage: 50, speed: 0.4, size: 3 }
+    boss:                        # Primary single boss (backward compatibility)
+      enabled: true
+      type: WITHER
+      name: '&0&l💀 ULTIMATE DESTROYER 💀'
+      health: 500
+      damage: 50
+      speed: 0.4
+      size: 3
+    advancement:
+      title: '&4&l💀 ULTIMATE CHAMPION 💀'
+      description: '&7You have conquered the most challenging dungeon and defeated all four bosses!'
+    loot:
+      enabled: true
+      rolls: 8
+      table:
+        - { item: NETHERITE_BLOCK,          min: 2, max: 4, weight: 3 }
+        - { item: DRAGON_EGG,               min: 1, max: 1, weight: 1 }
+        - { item: ELYTRA,                   min: 1, max: 1, weight: 2 }
+        - { item: ENCHANTED_GOLDEN_APPLE,   min: 3, max: 8, weight: 8 }
+        - { item: NETHERITE_INGOT,          min: 5, max: 10, weight: 10 }
+        - { command: 'give %player% minecraft:nether_star 3', weight: 5 }
+        - { command: 'give %player% minecraft:totem_of_undying 5', weight: 6 }
+
+  hardcore:
+    world: dungeon_world
+    display-name: '&4&l☠ NIGHTMARE ABYSS ☠'
+    location: { x: 600, y: 64, z: 600 }
+    player-spawn: { x: 65, y: -41, z: 0, facing: WEST }
+    boss-spawn:   { x: 0,  y: -52, z: 0, facing: EAST }
+    difficulty: INSANE
+    rewards:
+      money: 750.0
+      commands: [ 'give %player% minecraft:enchanted_golden_apple 3' ]
+    mobs:
+      - { type: WITHER_SKELETON, name: '&8Abyssal Reaver', health: 60, damage: 16, speed: 0.35 }
+      - { type: VINDICATOR,      name: '&cBloodguard',     health: 55, damage: 18, speed: 0.35 }
+      - { type: EVOKER,          name: '&5Hexbinder',      health: 45, damage: 14, speed: 0.32 }
+      - { type: PILLAGER,        name: '&7Dark Marksman',  health: 40, damage: 12, speed: 0.33 }
+      - { type: HUSK,            name: '&6Desert Stalker', health: 50, damage: 14, speed: 0.31 }
+      # Added second Warden (acts as an additional elite mob alongside boss Warden)
+      - { type: WARDEN,          name: '&2&lWarden Sentinel', health: 380, damage: 38, speed: 0.33 }
+    boss:
+      enabled: true
+      type: WARDEN
+      name: '&2&l🗡 WARDEN OF THE ABYSS 🗡'
+      health: 400
+      damage: 40
+      speed: 0.35
+      size: 0
+    waves:
+      count: 10
+      extra-minions-per-wave: [2,3,4,5,6,7,8,9,10,12]
+    advancement:
+      title: '&4&lNightmare Victor'
+      description: '&7You survived 10 rounds and defeated the Warden of the Abyss!'
+    loot:
+      enabled: true
+      rolls: 6
+      table:
+        - { item: NETHERITE_INGOT,        min: 2, max: 4, weight: 6 }
+        - { item: ENCHANTED_GOLDEN_APPLE, min: 1, max: 2, weight: 4 }
+        - { item: DIAMOND_BLOCK,          min: 4, max: 8, weight: 8 }
+        - { command: 'give %player% minecraft:totem_of_undying 2', weight: 6 }
+
+# =============================================================
+#  END OF CONFIG
+#  Copy a dungeon block to add more. Keep backups before edits.
+# =============================================================

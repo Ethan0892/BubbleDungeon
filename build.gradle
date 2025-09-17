@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.bubblecraft.dungeons'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://nexus.frengor.com/repository/public/' }
+    maven { url = 'https://repo.purpurmc.org/snapshots' }
+    maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'org.purpurmc.purpur:purpur-api:1.21.4-R0.1-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.11.5'
+    compileOnly('com.github.MilkBowl:VaultAPI:1.7') { transitive = false }
+    compileOnly 'com.frengor:ultimateadvancementapi:2.6.0'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+processResources {
+    filteringCharset = 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand(version: project.version)
+    }
+}
+
+// Keep jar slim (no fat shading) for lightweight deployment.
+
+// Deployment helper: gradlew deployPlugin -PserverDir=C:/path/to/server
+def serverDir = project.findProperty('serverDir')
+
+tasks.register('deployPlugin') {
+    group = 'deployment'
+    description = 'Builds and copies the plugin jar into the specified server plugins folder (use -PserverDir=...)'
+    dependsOn tasks.named('build')
+    doLast {
+        if (!serverDir) {
+            throw new GradleException("Specify target with -PserverDir=ABSOLUTE_PATH_TO_SERVER")
+        }
+        def dest = file("${serverDir}/plugins")
+        if (!dest.exists()) dest.mkdirs()
+        copy {
+            from tasks.named('jar').get().archiveFile
+            into dest
+        }
+        println "Copied plugin to ${dest}"
+    }
+}

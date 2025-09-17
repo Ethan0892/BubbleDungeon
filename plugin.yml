@@ -1,0 +1,33 @@
+name: BubbleDungeons
+description: Lightweight configurable dungeon system with optional MythicMobs & advancements
+main: com.bubblecraft.dungeons.BubbleDungeonsPlugin
+version: 1.0.0
+author: BubbleCraft
+api-version: '1.21'
+# Removed explicit STARTUP load to allow safe deferred world creation
+softdepend:
+  - MythicMobs
+  - UltimateAdvancementAPI
+  - PlaceholderAPI
+  - Vault
+commands:
+  dungeon:
+    description: Dungeon commands
+    usage: "/dungeon <join|start|menu|leave|reload|admin|config|safemode|testrun|undo|stats|forcejoin> [...]"
+    permission: bubbledungeons.use
+permissions:
+  bubbledungeons.use:
+    description: Use BubbleDungeons commands
+    default: true
+  bubbledungeons.admin:
+    description: Admin commands
+    default: op
+  bubbledungeons.editor:
+    description: Edit dungeons via GUI
+    default: op
+  bubbledungeons.reward:
+    description: Receive economy rewards
+    default: true
+  bubbledungeons.forcejoin:
+    description: Force send a player to a dungeon (portal integration)
+    default: op

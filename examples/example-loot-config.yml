@@ -1,0 +1,190 @@
+# Example configuration showing the enhanced loot system
+# Copy sections from here into your main config.yml
+
+dungeons:
+  # Easy dungeon with basic rewards
+  forest_ruins:
+    world: "dungeon_forest"
+    x: 0
+    y: 70
+    z: 0
+    # ... other settings ...
+    loot:
+      enabled: true
+      rolls: 2
+      guarantee-rare: false
+      items:
+        # Common food and materials
+        - item: "BREAD"
+          min: 2
+          max: 5
+          rarity: "COMMON"
+        - item: "ARROW"
+          min: 8
+          max: 16
+          rarity: "COMMON"
+        
+        # Small BubbleCoins reward
+        - bubblecoins: 25
+          rarity: "UNCOMMON"
+          
+        # Basic enchanted gear
+        - item: "IRON_SWORD"
+          name: "&aForest Guardian's Blade"
+          lore:
+            - "&7Blessed by woodland spirits"
+          rarity: "UNCOMMON"
+          glowing: true
+
+  # Medium difficulty dungeon with better rewards  
+  crystal_caves:
+    world: "dungeon_caves"
+    x: 0
+    y: 60
+    z: 0
+    # ... other settings ...
+    loot:
+      enabled: true
+      rolls: 3
+      guarantee-rare: false
+      items:
+        # Uncommon materials
+        - item: "DIAMOND"
+          min: 1
+          max: 3
+          rarity: "UNCOMMON"
+        - item: "EMERALD"
+          min: 2
+          max: 6
+          rarity: "UNCOMMON"
+          
+        # Good BubbleCoins reward
+        - bubblecoins: 75
+          rarity: "RARE"
+          
+        # Special crystal-themed items
+        - item: "AMETHYST_SHARD"
+          name: "&5Mystic Crystal Shard"
+          lore:
+            - "&7Pulses with magical energy"
+            - "&5Can be used for enchanting"
+          rarity: "RARE"
+          min: 3
+          max: 8
+          glowing: true
+          
+        # Rare enchanted book command
+        - command: "give %player% enchanted_book{StoredEnchantments:[{id:sharpness,lvl:3}]} 1"
+          rarity: "RARE"
+
+  # Hard boss dungeon with premium rewards
+  shadow_fortress:
+    world: "dungeon_shadow"
+    x: 0
+    y: 80
+    z: 0
+    # ... other settings ...
+    loot:
+      enabled: true
+      rolls: 4
+      guarantee-rare: true    # Boss dungeons should guarantee good loot
+      items:
+        # Epic weapons with lore
+        - item: "NETHERITE_SWORD"
+          name: "&4Shadow Reaper"
+          lore:
+            - "&7Forged in the void between worlds"
+            - "&cDeals devastating shadow damage"
+            - ""
+            - "&8Passive: Enemies flee in terror"
+            - ""
+            - "&5&lEPIC WEAPON"
+          rarity: "EPIC"
+          glowing: true
+          weight: 15  # Slightly higher chance for boss weapon
+          
+        # Large BubbleCoins jackpot
+        - bubblecoins: 500
+          rarity: "LEGENDARY"
+          weight: 8
+          
+        # Ultra-rare mythic drop
+        - item: "NETHERITE_INGOT"
+          name: "&4Void-Touched Netherite"
+          lore:
+            - "&7Infused with shadow essence"
+            - "&4Radiates dark power"
+            - ""
+            - "&4&lMYTHIC MATERIAL"
+          rarity: "MYTHIC"
+          min: 1
+          max: 2
+          glowing: true
+          
+        # Exclusive cosmetic command
+        - command: "lp user %player% permission set bubblecraft.title.shadowslayer true"
+          rarity: "LEGENDARY"
+          
+        # Rare consumables
+        - item: "ENCHANTED_GOLDEN_APPLE"
+          name: "&6Blessing of the Void"
+          lore:
+            - "&7Grants protection from shadow magic"
+          rarity: "EPIC"
+          min: 1
+          max: 2
+
+  # Weekly challenge dungeon with exclusive rewards
+  weekly_trial:
+    world: "dungeon_weekly"
+    x: 0
+    y: 100
+    z: 0
+    # ... other settings ...
+    loot:
+      enabled: true
+      rolls: 5
+      guarantee-rare: true
+      items:
+        # Massive BubbleCoins reward
+        - bubblecoins: 1000
+          rarity: "MYTHIC"
+          weight: 3
+          
+        # Exclusive weekly items
+        - item: "ELYTRA"
+          name: "&6&lWeekly Champion's Wings"
+          lore:
+            - "&7Awarded to this week's dungeon masters"
+            - "&6Shimmers with golden light"
+            - ""
+            - "&6&lWEEKLY EXCLUSIVE"
+          rarity: "MYTHIC"
+          glowing: true
+          weight: 2
+          
+        # Special rank/permission rewards
+        - command: "lp user %player% parent add bubblecraft_vip"
+          rarity: "LEGENDARY"
+          weight: 5
+          
+        # Multiple valuable items
+        - item: "DIAMOND_BLOCK"
+          name: "&bCompressed Wealth"
+          rarity: "EPIC"
+          min: 3
+          max: 8
+          
+        # Random high-level enchanted book
+        - command: "give %player% enchanted_book{StoredEnchantments:[{id:mending,lvl:1}]} 1"
+          rarity: "LEGENDARY"
+
+# Additional Features Configuration
+features:
+  loot-rewards: true
+  economy-rewards: true
+
+# Debug options (optional)
+debug:
+  log-loot-rolls: false
+  log-rare-drops: true

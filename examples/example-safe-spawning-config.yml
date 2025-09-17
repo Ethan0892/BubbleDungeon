@@ -1,0 +1,218 @@
+# Example Safe Spawning & Return Configuration
+# Add these sections to your main config.yml
+
+# Core Features
+features:
+  auto-return: true              # Enable automatic return to main world
+  loot-rewards: true
+  economy-rewards: true
+  boss-bar: true
+
+# Main world for default returns
+main-world: "world"
+
+# Custom return messages
+messages:
+  returned-to-world: "&6&lBubble&bCraft &8» &eWelcome back to the main world!"
+  dungeon-complete: "&6&lBubble&bCraft &8» &aDungeon completed! Well done!"
+  dungeon-failed: "&6&lBubble&bCraft &8» &cDungeon failed. Better luck next time!"
+
+# Dungeon configurations with safe spawning and return locations
+dungeons:
+  # Easy starter dungeon - returns to spawn
+  forest_ruins:
+    world: "dungeon_forest"
+    location:
+      x: 0
+      y: 70      # Safe spawning will find solid ground below this
+      z: 0
+    player-spawn:
+      x: 5
+      y: 70      # Players will spawn safely on ground below this Y level
+      z: 5
+    boss-spawn:
+      x: -10
+      y: 70      # Boss will spawn safely on ground below this Y level
+      z: -10
+    # Uses default main world return (no custom return needed)
+    
+  # Medium difficulty - returns to town square
+  crystal_caves:
+    world: "dungeon_caves"
+    location:
+      x: 0
+      y: 60
+      z: 0
+    player-spawn:
+      x: 8
+      y: 60
+      z: 8
+    boss-spawn:
+      x: -15
+      y: 60
+      z: -15
+    # Custom return location to town
+    return-location:
+      world: "town_world"
+      x: 100
+      y: 80      # Will find safe ground below this level
+      z: 150
+    mobs:
+      - type: "ZOMBIE"
+        name: "&eCave Dweller"
+        health: 30
+        damage: 6
+        speed: 0.25
+        size: 1
+    boss:
+      enabled: true
+      type: "WITHER_SKELETON"
+      name: "&5Crystal Guardian"
+      health: 200
+      damage: 15
+      speed: 0.3
+      size: 2
+
+  # Hard dungeon - returns to special victory hall
+  shadow_fortress:
+    world: "dungeon_shadow"
+    location:
+      x: 0
+      y: 80
+      z: 0
+    player-spawn:
+      x: 10
+      y: 80
+      z: 10
+    boss-spawn:
+      x: -20
+      y: 80
+      z: -20
+    # Return to exclusive victory area
+    return-location:
+      world: "victory_hall"
+      x: 0
+      y: 100     # Spawns safely on platform below
+      z: 0
+    mobs:
+      - type: "WITHER_SKELETON"
+        name: "&8Shadow Warrior"
+        health: 50
+        damage: 12
+        speed: 0.3
+        size: 1
+    boss:
+      enabled: true
+      type: "WITHER"
+      name: "&4&lShadow Lord"
+      health: 500
+      damage: 25
+      speed: 0.2  # Will be slower than minions due to auto-balancing
+      size: 3
+    loot:
+      enabled: true
+      rolls: 4
+      guarantee-rare: true
+      items:
+        - item: "NETHERITE_SWORD"
+          name: "&4Shadow Reaper"
+          rarity: "LEGENDARY"
+          glowing: true
+        - bubblecoins: 1000
+          rarity: "EPIC"
+
+  # Weekly challenge - returns to champion area
+  weekly_trial:
+    world: "dungeon_weekly"
+    location:
+      x: 0
+      y: 100
+      z: 0
+    player-spawn:
+      x: 15
+      y: 100
+      z: 15
+    boss-spawn:
+      x: -25
+      y: 100
+      z: -25
+    # Exclusive champion return location
+    return-location:
+      world: "champion_hall"
+      x: 50
+      y: 120
+      z: 50
+    mobs:
+      - type: "PIGLIN_BRUTE"
+        name: "&6Trial Champion"
+        health: 80
+        damage: 18
+        speed: 0.35
+        size: 1
+    boss:
+      enabled: true
+      type: "ENDER_DRAGON"
+      name: "&d&lWeekly Trial Boss"
+      health: 1000
+      damage: 30
+      speed: 0.25
+      size: 4
+
+  # PvP-style dungeon - returns to PvP lobby
+  arena_challenge:
+    world: "dungeon_arena"
+    location:
+      x: 0
+      y: 75
+      z: 0
+    player-spawn:
+      x: 20
+      y: 75
+      z: 0
+    boss-spawn:
+      x: -20
+      y: 75
+      z: 0
+    # Return to PvP area
+    return-location:
+      world: "pvp_world"
+      x: 0
+      y: 85
+      z: 0
+    mobs:
+      - type: "PILLAGER"
+        name: "&cArena Fighter"
+        health: 40
+        damage: 10
+        speed: 0.3
+        size: 1
+
+# Advanced spawn configuration examples
+spawn-configurations:
+  # These show different scenarios for safe spawning
+  
+  mountain-dungeon:
+    # High altitude spawn - will find safe ground below
+    player-spawn:
+      y: 150    # Very high - safe spawning will find mountain ledge below
+    
+  underground-dungeon:
+    # Underground spawn - already at ground level
+    player-spawn:
+      y: 30     # Underground level - will verify ground safety
+      
+  floating-island-dungeon:
+    # Floating platform - will spawn on the platform
+    player-spawn:
+      y: 80     # Platform level - will find solid floating blocks
+      
+  void-world-dungeon:
+    # Void world with platforms - will find nearest platform
+    player-spawn:
+      y: 100    # Above void - will find floating platform below
+
+# Debug options (optional)
+debug:
+  log-safe-spawning: false    # Log safe spawn calculations
+  log-return-teleports: false # Log return teleportations
+  show-spawn-particles: false # Show particles at safe spawn points
